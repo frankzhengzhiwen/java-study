@@ -32,6 +32,7 @@ public class Controller implements Initializable {
     private TableView<FileMeta> fileTable;
 
     public void initialize(URL location, ResourceBundle resources) {
+        // 添加搜索框监听器，内容改变时执行监听事件
         searchField.textProperty().addListener(new ChangeListener<String>() {
 
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
