@@ -44,7 +44,7 @@ public class DBInit {
                 br.close();
             if(isr != null)
                 isr.close();
-            if(br != null)
+            if(is != null)
                 br.close();
         }
     }

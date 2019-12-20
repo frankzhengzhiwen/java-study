@@ -1,0 +1,8 @@
+# Project exclude paths
+/out
+/target
+/.idea
+*.iml
+
+# Project exclude paths
+/mysearcher/target/

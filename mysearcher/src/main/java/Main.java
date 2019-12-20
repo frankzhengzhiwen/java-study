@@ -17,9 +17,9 @@ import java.util.Date;
  */
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        DBInit.init();
-        FileScanner scanner = new FileScanner();
-        scanner.scanWait(new File("D:/Workspaces"), new FileSave());
+//        DBInit.init();
+//        FileScanner scanner = new FileScanner();
+//        scanner.scanWait(new File("D:/Workspaces"), new FileSave());
 
         App.main(args);
     }
