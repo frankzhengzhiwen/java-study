@@ -46,6 +46,34 @@ public class Response {
     }
 
     /**
+     * 构建200响应头
+     */
+    public void build200(){
+        this.setStatus(200);
+        this.setMessage("OK");
+    }
+
+    /**
+     * 构建307重定向响应头
+     * @param location 重定向URL
+     */
+    public void build307(String location){
+        this.setStatus(307);
+        this.setMessage("Temporary Redirect");
+        this.addHeader("Location", location);
+        this.println("");
+    }
+
+    /**
+     * 构建404找不到资源
+     */
+    public void build404(){
+        this.setStatus(404);
+        this.setMessage("Not Found");
+        this.println("<h1>没有找到资源</h1>");
+    }
+
+    /**
      * 返回信息
      * @param content
      */
@@ -54,6 +82,19 @@ public class Response {
         return this;
     }
 
+    /**
+     * 添加响应头
+     * @param key
+     * @param value
+     */
+    public void addHeader(String key, String value) {
+        headers.put(key, value);
+    }
+
+    /**
+     * 根据设置的响应信息进行输出
+     * @throws IOException
+     */
     public void flush() throws IOException {
         writer.println("HTTP/1.1 "+status+" "+message);
         writer.println("Content-Type: text/html; charset=utf-8");
@@ -63,10 +104,6 @@ public class Response {
         });
         writer.println();
         writer.println(body.toString());
-    }
-
-    public void addHeader(String key, String value) {
-        headers.put(key, value);
     }
 
     public int getStatus() {

@@ -22,8 +22,6 @@ public class App extends Application {
         primaryStage.setScene(new Scene(root, 1000, 800));
         primaryStage.show();
     }
-
-
     public static void main(String[] args) {
         launch(args);
     }
