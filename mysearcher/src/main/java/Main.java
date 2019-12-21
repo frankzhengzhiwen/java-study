@@ -1,12 +1,8 @@
-import app.App;
-import task.DBInit;
-import task.FileScanner;
-import task.FileSave;
-
-import java.io.File;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 /**
  * @ClassName Main
@@ -15,12 +11,16 @@ import java.util.Date;
  * @Date 2019/12/18 6:25 下午
  * @Version 1.0
  */
-public class Main {
-    public static void main(String[] args) throws InterruptedException {
-//        DBInit.init();
-//        FileScanner scanner = new FileScanner();
-//        scanner.scanWait(new File("D:/Workspaces"), new FileSave());
+public class Main extends Application {
 
-        App.main(args);
+    @Override
+    public void start(Stage primaryStage) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("app.fxml"));
+        primaryStage.setTitle("搜索神器");
+        primaryStage.setScene(new Scene(root, 1000, 800));
+        primaryStage.show();
+    }
+    public static void main(String[] args) {
+        launch(args);
     }
 }

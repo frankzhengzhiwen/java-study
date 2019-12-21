@@ -71,12 +71,17 @@ public class FileScanner {
      * 结束任务
      */
     public void finish(){
-        exe.shutdown();
+        exe.shutdownNow();
 //        semaphore.release();
         latch.countDown();
     }
 
-    public static interface Callback{
+    public void shutDownNow(){
+        if(!exe.isShutdown())
+            exe.shutdownNow();
+    }
+
+    public interface Callback{
         void execute(FileMeta meta);
     }
 
