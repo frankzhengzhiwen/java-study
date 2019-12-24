@@ -4,7 +4,8 @@ import org.sqlite.SQLiteConfig;
 import org.sqlite.SQLiteDataSource;
 
 import javax.sql.DataSource;
-import java.io.*;
+import java.io.File;
+import java.net.URLDecoder;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -40,10 +41,18 @@ public class DBUtil {
     private static DataSource DATA_SOURCE;
 
     static{
-        String classLoaderPath = DBUtil.class.getClassLoader().getResource("./").getPath();
-        PATH = new File(classLoaderPath).getParent()+File.separator+DB_NAME;
-        System.out.println("database path==="+PATH);
-        URL = "jdbc:sqlite://" + PATH;
+        try {
+            // 获取编译路径classes文件夹
+            String classesPath = DBUtil.class.getProtectionDomain()
+                    .getCodeSource().getLocation().getFile();
+            File classesDir = new File(URLDecoder.decode(classesPath, "UTF-8"));
+            PATH = classesDir.getParent()+File.separator+DB_NAME;
+            System.out.println("database path==="+PATH);
+            URL = "jdbc:sqlite://" + PATH;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("DBUtil初始化错误", e);
+        }
     }
 
     /**
