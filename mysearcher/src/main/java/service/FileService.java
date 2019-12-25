@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class FileService {
 
-    public void process(File dir) throws SQLException {
+    public static void process(File dir) throws SQLException {
 
         // 本地获取到的文件夹及下一级文件、文件夹
         List<FileMeta> scanned = new ArrayList<>();

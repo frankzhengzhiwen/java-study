@@ -83,7 +83,7 @@ public class Controller implements Initializable {
                     // 根据选择的目录执行数据库初始化任务，并开启文件扫描
                     FileScanner scanner = new FileScanner();
                     try {
-                        scanner.scanWait(new File(path), new FileService());
+                        scanner.scanWait(new File(path));
                         freshTable();
                     } catch (Exception e) {
                         // 中断通知，由scanWait中的semaphore.acquire();或latch.await();抛出

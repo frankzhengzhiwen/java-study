@@ -19,12 +19,9 @@ class ScanJob implements Runnable{
      */
     private FileScanner scanner;
 
-    private FileService fileService;
-
-    public ScanJob(File dir, FileScanner scanner, FileService fileService) {
+    public ScanJob(File dir, FileScanner scanner) {
         this.dir = dir;
         this.scanner = scanner;
-        this.fileService = fileService;
     }
 
     @Override
@@ -34,7 +31,7 @@ class ScanJob implements Runnable{
             try {
                 if(dir == null || !dir.isDirectory())
                     return;
-                fileService.process(dir);
+                FileService.process(dir);
                 File[] subs = dir.listFiles();
                 if(subs == null)
                     return;
@@ -42,7 +39,7 @@ class ScanJob implements Runnable{
                     if(sub.isDirectory()) {
                         // 子线程还没有执行时就需要将待处理任务数+1
                         scanner.taskCount.incrementAndGet();
-                        scanner.scan(sub, fileService);
+                        scanner.scan(sub);
                     }
                 }
             } finally {

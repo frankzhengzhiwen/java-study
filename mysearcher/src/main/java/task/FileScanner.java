@@ -1,7 +1,5 @@
 package task;
 
-import service.FileService;
-
 import java.io.File;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -51,8 +49,8 @@ public class FileScanner {
      * @param dir
      * @throws InterruptedException
      */
-    void scan(File dir, FileService fileService) throws InterruptedException {
-        exe.submit(new ScanJob(dir, this, fileService));
+    void scan(File dir) throws InterruptedException {
+        exe.submit(new ScanJob(dir, this));
     }
 
     /**
@@ -60,9 +58,9 @@ public class FileScanner {
      * @param root 根目录
      * @throws InterruptedException
      */
-    public void scanWait(File root, FileService fileService) throws InterruptedException {
+    public void scanWait(File root) throws InterruptedException {
         taskCount.incrementAndGet();
-        scan(root, fileService);
+        scan(root);
 //        semaphore.acquire();
         latch.await();
     }
