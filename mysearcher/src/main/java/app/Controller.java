@@ -103,6 +103,5 @@ public class Controller implements Initializable {
         metas.clear();
         List<FileMeta> searchMetas = FileService.search(searchField.getText());
         metas.addAll(searchMetas);
-        fileTable.refresh();
     }
 }

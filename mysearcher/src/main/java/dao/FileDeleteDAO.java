@@ -17,7 +17,6 @@ public class FileDeleteDAO {
         Connection connection = null;
         PreparedStatement ps1 = null;
         PreparedStatement ps2 = null;
-        PreparedStatement ps3 = null;
         try {
             try {
                 connection = DBUtil.getConnection();

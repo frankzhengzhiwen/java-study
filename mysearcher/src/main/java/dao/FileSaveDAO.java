@@ -50,6 +50,7 @@ public class FileSaveDAO {
                 }
                 connection.commit();
             } finally {
+                DBUtil.close(resultSet);
                 DBUtil.close(ps1, ps2);
                 DBUtil.close(connection);
             }

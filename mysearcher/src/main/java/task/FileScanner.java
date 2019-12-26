@@ -59,7 +59,7 @@ public class FileScanner {
      * @throws InterruptedException
      */
     public void scanWait(File root) throws InterruptedException {
-        System.out.println("===================start===================");
+        System.out.println("\n\n\n===================start===================");
         taskCount.incrementAndGet();
         scan(root);
 //        semaphore.acquire();
@@ -73,7 +73,7 @@ public class FileScanner {
         exe.shutdown();
 //        semaphore.release();
         latch.countDown();
-        System.out.println("===================end===================\n\n\n\n");
+        System.out.println("===================end===================");
     }
 
     public void shutDown(){
