@@ -21,9 +21,8 @@ public class FileService {
 
     public static void process(File dir) throws SQLException {
 
-        // 本地获取到的文件夹及下一级文件、文件夹
+        // 本地获取到的文件夹下一级文件、文件夹
         List<FileMeta> scanned = new ArrayList<>();
-        scanned.add(new FileMeta(dir));
         File[] subs = dir.listFiles();
         if(subs != null){
             for(File sub : subs)

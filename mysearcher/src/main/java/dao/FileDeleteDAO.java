@@ -4,7 +4,9 @@ import app.FileMeta;
 import util.DBUtil;
 
 import java.io.File;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,39 +22,40 @@ public class FileDeleteDAO {
             try {
                 connection = DBUtil.getConnection();
                 connection.setAutoCommit(false);
-                String sql = "delete from file_pinyin" +
-                        " where exists (" +
-                        " select * from file_meta" +
-                        " where file_meta.id=file_pinyin.file_meta_id" +
-                        " and file_meta.id=?" +
-                        " or (file_meta.path like ? and file_meta.is_directory=?)" +
-                        ")";
-                ps1 = connection.prepareStatement(sql);
-
-                sql = "delete from file_meta" +
-                        " where id=?" +
-                        " or (path like ? and is_directory=?)";
-                ps2 = connection.prepareStatement(sql);
-
-                sql = "delete from file_meta" +
-                        " where path=? or path like ?";
-                ps3 = connection.prepareStatement(sql);
 
                 for(FileMeta meta : metas){
+                    String sql = "delete from file_pinyin"
+                            + " where exists ("
+                            + " select * from file_meta" +
+                            " where file_meta.id=file_pinyin.file_meta_id"
+                            + " and file_meta.id=?"
+                            + (meta.getDirectory() ?
+                                " or (file_meta.path=? or file_meta.path like ?)"
+                                : "")
+                            + ")";
+                    ps1 = connection.prepareStatement(sql);
+
+                    sql = "delete from file_meta"
+                            + " where id=?"
+                            + (meta.getDirectory() ?
+                            " or (path=? or path like ?)"
+                            : "");
+                    ps2 = connection.prepareStatement(sql);
+
                     ps1.setInt(1, meta.getId());
-                    ps1.setString(2, meta.getPath()+"%");
-                    ps1.setBoolean(3, true);
-                    ps1.executeUpdate();
                     ps2.setInt(1, meta.getId());
-                    ps2.setString(2, meta.getPath()+"%");
-                    ps2.setBoolean(3, true);
-                    ps2.executeUpdate();
+
+                    String path = null;
                     if(meta.getDirectory()){
-                        String path = meta.getPath()+File.separator+meta.getName();
-                        ps3.setString(1, path);
-                        ps3.setString(2, path+ File.separator+"%");
-                        ps3.executeUpdate();
+                        path = meta.getPath()+File.separator+meta.getName();
+                        ps1.setString(2, path);
+                        ps1.setString(3, path+ File.separator+"%");
+                        ps2.setString(2, path);
+                        ps2.setString(3, path+ File.separator+"%");
                     }
+                    System.out.println("delete: id="+meta.getId()+(meta.getDirectory()?", or under "+path:""));
+                    ps1.executeUpdate();
+                    ps2.executeUpdate();
                 }
                 connection.commit();
             }finally {

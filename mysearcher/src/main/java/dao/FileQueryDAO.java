@@ -51,11 +51,9 @@ public class FileQueryDAO {
             connection = DBUtil.getConnection();
             String sql = "select id, name, path, is_directory, size, last_modified" +
                     " from file_meta" +
-                    " where name=? and path=? or path=?";
+                    " where path=?";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, dir.getName());
-            statement.setString(2, dir.getParent());
-            statement.setString(3, dir.getPath());
+            statement.setString(1, dir.getPath());
             resultSet = statement.executeQuery();
             while(resultSet.next()){
                 int id = resultSet.getInt("id");
