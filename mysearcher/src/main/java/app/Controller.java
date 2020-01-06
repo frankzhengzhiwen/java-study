@@ -11,7 +11,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.Stage;
 import javafx.stage.Window;
 import service.DBService;
 import service.FileService;
@@ -64,7 +63,7 @@ public class Controller implements Initializable {
     public void choose(Event event) {
         // 选择文件目录
         DirectoryChooser directoryChooser=new DirectoryChooser();
-        Window window = (Stage) rootPane.getScene().getWindow();
+        Window window = rootPane.getScene().getWindow();
         File file = directoryChooser.showDialog(window);
         if(file == null)
             return;
