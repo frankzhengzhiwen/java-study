@@ -40,9 +40,6 @@ public class DBUtil {
      */
     private static DataSource DATA_SOURCE;
 
-    private static ThreadLocal<Connection> LOCAL_CONNECTION
-            = new ThreadLocal<>();
-
     static{
         try {
             // 获取编译路径classes文件夹

@@ -3,16 +3,13 @@ package util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import model.Message;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class JSONUtil {
-
-    /**
-     * 日期格式
-     */
-    private static final String DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
     /**
      * JSON处理类
@@ -27,12 +24,12 @@ public class JSONUtil {
      * 单例模式获取JSON处理类
      * @return
      */
-    private static ObjectMapper getMapper(){
+    public static ObjectMapper getMapper(){
         if(MAPPER == null){
             synchronized (JSONUtil.class){
                 if(MAPPER == null){
                     MAPPER = new ObjectMapper();
-                    MAPPER.setDateFormat(new SimpleDateFormat(DATE_PATTERN));
+                    MAPPER.setDateFormat(new SimpleDateFormat(Const.DATE_PATTERN));
 //		jsonMapper.setSerializationInclusion(Include.NON_NULL);
                     MAPPER.enable(SerializationFeature.INDENT_OUTPUT);
                 }
@@ -49,8 +46,13 @@ public class JSONUtil {
      * @return
      * @throws IOException
      */
-    public static <T> T deserialize(String str, Class<T> clazz) throws IOException {
-        return getMapper().readValue(str, clazz);
+    public static <T> T deserialize(String str, Class<T> clazz) {
+        try {
+            return getMapper().readValue(str, clazz);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("JSON反序列化错误", e);
+        }
     }
 
     /**
@@ -59,7 +61,23 @@ public class JSONUtil {
      * @return
      * @throws JsonProcessingException
      */
-    public static String serialize(Object object) throws JsonProcessingException {
-        return getMapper().writeValueAsString(object);
+    public static String serialize(Object object) {
+        try {
+            return getMapper().writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            throw new RuntimeException("JSON序列化错误", e);
+        }
+    }
+
+    public static void main(String[] args) throws JsonProcessingException {
+        Message message = new Message();
+        message.setType(MessageType.valueOf("publish".toUpperCase()));
+        message.setHost("127.0.0.1");
+        message.setPort(9999);
+        message.setTopic("order");
+        message.setDate(new Date());
+        message.setContent("卖出一台笔记本电脑");
+        System.out.println(serialize(message));
     }
 }

@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>frank</groupId>
-    <artifactId>mymq-server</artifactId>
+    <groupId>org.example</groupId>
+    <artifactId>mymq-client</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
@@ -13,6 +13,16 @@
             <groupId>frank</groupId>
             <artifactId>mymq-base</artifactId>
             <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>javax.mail-api</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.2</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
